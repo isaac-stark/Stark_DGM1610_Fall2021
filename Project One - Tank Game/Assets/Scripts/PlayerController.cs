@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     public float turnSpeed;
+    public float hInput;
+    public float vInput;
 
 
 
@@ -18,6 +20,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        hInput = Input.GetAxis("Horizontal");
+        vInput = Input.GetAxis("Vertical");
+
+        //Moves the tank left & right
+        transform.Rotate(Vector3.up * turnSpeed * hInput * Time.deltaTime);
+
+        //Moves the tank forward & back
+        transform.Translate(Vector3.forward * speed * Time.deltaTime * vInput);
     }
 }
