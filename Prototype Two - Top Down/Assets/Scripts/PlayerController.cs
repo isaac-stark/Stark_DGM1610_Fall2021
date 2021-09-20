@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     public float speed = 20f;
     public float hInput;
     public float vInput;
     public float xRange = 8.46f;
     public float yRange = 4.58f;
+    public GameObject projectile;
+    public Vector3 offset = new Vector3(0,1);
     //public int health;
-
-    void Start()
-    {
-
-    }
 
     void Update()
     {
@@ -41,6 +37,12 @@ public class PlayerController : MonoBehaviour
                 ? y = -yRange
                 : y = yRange;
             transform.position = new Vector2(transform.position.x, y);
+        }
+
+        //Shoot Projectile
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(projectile, transform.position + offset, projectile.transform.rotation);
         }
     }
 }
