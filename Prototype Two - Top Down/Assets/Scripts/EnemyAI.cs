@@ -18,6 +18,7 @@ public class EnemyAI : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Destroy(gameObject);
+        //Destroy Enemy When Shot
+        if(collider.CompareTag("Projectile")) Destroy(gameObject);
     }
 }
