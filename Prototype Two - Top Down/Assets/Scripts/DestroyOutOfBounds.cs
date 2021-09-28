@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class DestroyOutOfBounds : MonoBehaviour
 {
-    public float xRange = 8.88f;
-    public float yRange = 5f;
-    // Start is called before the first frame update
+    private float xRange = 8.88f;
+    private float yRange = 5f;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Destroy Projectile When Out Of Bounds
         if (Mathf.Abs(transform.position.x) >= xRange) Destroy(gameObject);
         if (Mathf.Abs(transform.position.y) >= yRange) Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        //Destroy Projectile On Any Collision To Prevent Buildup
+        Destroy(gameObject);
     }
 }

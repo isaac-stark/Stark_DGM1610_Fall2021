@@ -5,10 +5,10 @@ using UnityEngine;
 public class MoveForward : MonoBehaviour
 {
     private float speed = 8f;
-    
-    // Update is called once per frame
+
     void Update()
     {
+        //Move Projectile Foward
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
 }
