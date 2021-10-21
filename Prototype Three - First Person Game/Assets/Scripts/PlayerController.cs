@@ -4,66 +4,95 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float
-        moveSpeed,          //Move Speed In U/s
-        jumpForce,          //Upwards Jump Force
-        lookSens,           //Mouse Camera Control Sensitivity
-        minLook,            //Highest Vertical Camera Angle
-        maxLook;            //Lowest Vertical Camera Angle
-    private float rotX;
-    private Camera cam;
-    private Rigidbody rb;
-    private Transform launcher;
-
-    void Start()
-    {
-        //Get Components
-        cam = Camera.main;
-        rb = GetComponent<Rigidbody>();
-        launcher = GameObject.Find("Blast").transform;
-    }
-
-    void Update()
-    {
-        Move();
-        CamLook();
-        Jump();
-        Shoot();
-    }
-
-    void Move()             //Player Movement
-    {
-        float x = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-        float z = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
-        transform.Translate(x, 0, z);
-    }
-
-    void CamLook()          //Camera Rotation
-    {
-        float x = Input.GetAxis("Mouse X") * lookSens;
-        rotX += Input.GetAxis("Mouse Y") * lookSens;
-        float clamp = Mathf.Clamp(rotX, minLook, maxLook); 
-        transform.Rotate(0, x, 0);
-        cam.transform.localRotation = Quaternion.Euler(-clamp, 0, 0);
-    }
+        //Initialize Variables
+    float
+        moveSpeed,                  //Move Speed In U/s
+        jumpForce,                  //Upwards Jump Force
+        lookSens,                   //Mouse Camera Control Sensitivity
+        minLook,                    //Highest Vertical Camera Angle
+        maxLook,                    //Lowest Vertical Camera Angle
+        y,                          //Current Vertical Camera Angle
+        T;                          //Time.deltaTime
+    bool colliding;                 //Are We Touching Anything?
+    Camera cam;                     //Player Camera
+    Rigidbody rb;                   //Player Rigidbody
+    Weapon weapon;                  //Player Weapon Script
 
     void Awake()
     {
         //Disable Cursor
         Cursor.lockState = CursorLockMode.Locked;
+
+        //Get Components
+        weapon = GameObject.Find("Blaster").GetComponent<Weapon>();
+        cam = Camera.main;
+        rb = GetComponent<Rigidbody>();
     }
 
-    void Jump()             //Jumping
+    void Start()
     {
-        if (Input.GetButtonDown("Jump")) rb.velocity = new Vector3(0, jumpForce, 0);
+        //Set Initial Values
+        moveSpeed = 3;
+        jumpForce = 20;
+        lookSens = 280;
+        minLook = -90;
+        maxLook = 90;
+        T = Time.deltaTime;
+
+        //Verify Everything is Zeroed Out On Start
+        Input.ResetInputAxes();
     }
 
-    void Shoot()
+    void Move()                     //Player Movement
     {
-        if (Input.GetKeyDown("mouse 0"))
-        {
-            Instantiate((Resources.Load("Bullet")), launcher.transform.position, launcher.transform.rotation);
-            print("Bang!");
-        }
+        //Get Axes
+        float x = Input.GetAxisRaw("Horizontal") * moveSpeed * T;
+        float z = Input.GetAxisRaw("Vertical") * moveSpeed * T;
+
+        //Move
+        transform.Translate(x, 0, z);
+    }
+
+    void Look()                     //Camera Rotation
+    {
+        //Get Axes
+        float x = Input.GetAxisRaw("Mouse X") * lookSens * T;
+        y += Input.GetAxisRaw("Mouse Y") * lookSens * T;
+
+        //Limit Vertical Look
+        y = Mathf.Clamp(y, minLook, maxLook);
+
+        //Look
+        transform.Rotate(0, x, 0);
+        cam.transform.localRotation = Quaternion.Euler(-y, 0, 0);
+    }
+
+    void Jump()                     //Jumping
+    {
+        //Instantaneous Force On Player
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    }
+
+    public void OnCollisionEnter()  //Check For Collision
+    {
+        colliding = true;
+    }
+
+    public void OnCollisionExit()   //Check For Collision Exit
+    {
+        colliding = false;
+    }
+
+    void Update()
+    {
+        Move();
+        Look();
+
+        //Jump Button & Disable Multi-Jumping
+        if (Input.GetButtonDown("Jump") && colliding)
+            Jump();
+
+        //Fire Button & Verify Ability To Shoot
+        if (Input.GetKeyDown("mouse 0")) weapon.Fire();
     }
 }
