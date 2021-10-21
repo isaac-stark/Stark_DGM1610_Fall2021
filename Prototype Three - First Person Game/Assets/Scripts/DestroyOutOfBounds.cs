@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class DestroyOutOfBounds : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(transform.position.x) >= 80) Destroy(gameObject);
-        if (Mathf.Abs(transform.position.z) >= 80) Destroy(gameObject);
+        //Deactivate Bullet When Out Of Bounds
+        if ((Mathf.Abs(transform.position.x) >= 80)
+            ^ (Mathf.Abs(transform.position.y) >= 80)
+            ^ (Mathf.Abs(transform.position.z) >= 80))
+            gameObject.active = false;
     }
 }

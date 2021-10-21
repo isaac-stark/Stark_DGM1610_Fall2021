@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         //Get Components
-        weapon = GameObject.Find("Blaster").GetComponent<Weapon>();
+        weapon = GetComponent<Weapon>();
         cam = Camera.main;
         rb = GetComponent<Rigidbody>();
     }
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
-    public void OnCollisionEnter()  //Check For Collision
+    public void OnCollisionEnter()  //Check For Collision Enter
     {
         colliding = true;
     }
@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
             Jump();
 
         //Fire Button & Verify Ability To Shoot
-        if (Input.GetKeyDown("mouse 0")) weapon.Fire();
+        if (Input.GetKeyDown("mouse 0")) 
+            weapon.Fire();
     }
 }
