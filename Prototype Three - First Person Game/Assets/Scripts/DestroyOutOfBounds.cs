@@ -10,6 +10,6 @@ public class DestroyOutOfBounds : MonoBehaviour
         if ((Mathf.Abs(transform.position.x) >= 80)
             ^ (Mathf.Abs(transform.position.y) >= 80)
             ^ (Mathf.Abs(transform.position.z) >= 80))
-            gameObject.active = false;
+            gameObject.SetActive(false);
     }
 }

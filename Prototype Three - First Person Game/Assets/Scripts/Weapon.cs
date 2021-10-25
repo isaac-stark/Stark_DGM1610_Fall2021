@@ -31,8 +31,8 @@ public class Weapon : MonoBehaviour
     void Start()
     {
         //Set Initial Values
-        ammo = 10;
         maxAmmo = 10;
+        ammo = maxAmmo;
         infAmmo = false;
         fireSpeed = 60;
         fireRate = 1;

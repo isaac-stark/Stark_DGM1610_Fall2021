@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-        //Initialize Variables
+    //Floats
     float
         moveSpeed,                  //Move Speed In U/s
         jumpForce,                  //Upwards Jump Force
@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
         maxLook,                    //Lowest Vertical Camera Angle
         y,                          //Current Vertical Camera Angle
         T;                          //Time.deltaTime
+
     bool colliding;                 //Are We Touching Anything?
     Camera cam;                     //Player Camera
     Rigidbody rb;                   //Player Rigidbody
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         minLook = -90;
         maxLook = 90;
         T = Time.deltaTime;
+        colliding = false;
 
         //Verify Everything is Zeroed Out On Start
         Input.ResetInputAxes();
