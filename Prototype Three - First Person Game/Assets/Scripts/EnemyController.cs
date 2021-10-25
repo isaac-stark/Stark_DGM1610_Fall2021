@@ -6,23 +6,19 @@ using System.Linq;
 
 public class EnemyController : MonoBehaviour
 {
-    //Stats
+    //Declare Variables
+    List<Vector3> path;                 //Pathfinding
+    GameObject target;                  //Target To Pathfind
+    Weapon weapon;                      //Access Blaster Functions
+
     int
-        HP,                     //Current HP
-        maxHP,                  //Max HP
-        scoreToGive;            //?
-
-    //Movement
+        HP,                             //Current HP
+        maxHP;                          //Max HP                    
     float
-        speed,                  //Movement Speed
-        range,                  //Attack Range
-        yPathOffset,            //?
-        dist;                   //Distance From Target
-    List<Vector3> path;         //Pathfinding
-    GameObject target;          //Target To Pathfind
-
-    //Weapon
-    Weapon weapon;              //Access Blaster Functions
+        speed,                          //Movement Speed
+        range,                          //Attack Range
+        yPathOffset,                    //Unsure What This Actually Does
+        dist;                           //Distance From Target
 
     void Start()
     {
@@ -31,15 +27,15 @@ public class EnemyController : MonoBehaviour
         target = FindObjectOfType<PlayerController>().gameObject;
         InvokeRepeating("UpdatePath", 0, .25f);
 
-        //Set Initial Values
+        //Intitialize Variables
         maxHP = 20;
         HP = maxHP;
         speed = 2.6f;
         range = 10;
-        yPathOffset = .98f;
+        yPathOffset = .983f;
     }
 
-    void UpdatePath()
+    void UpdatePath()                   //Reroute Path
     {
         //Create Path To Target
         NavMeshPath navMeshPath = new NavMeshPath();
@@ -52,7 +48,7 @@ public class EnemyController : MonoBehaviour
         path = navMeshPath.corners.ToList();
     }
 
-    void Move()
+    void Move()                         //Movement Logic
     {
         if (path.Count == 0) return;
 
@@ -67,6 +63,12 @@ public class EnemyController : MonoBehaviour
 
         if (transform.position == path[0] + new Vector3(0, yPathOffset, 0))
             path.RemoveAt(0);
+    }
+
+    public void TakeDamage(int damage)  //Taking Damage
+    {
+        HP -= damage;
+        if (HP <= 0) Destroy(gameObject);
     }
 
     void Update()

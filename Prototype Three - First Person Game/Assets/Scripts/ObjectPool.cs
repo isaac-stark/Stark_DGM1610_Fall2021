@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
+    //Declare Variables
     GameObject objPrefab;
-    int createOnStart;
     List<GameObject> objPool = new List<GameObject>();
+    int createOnStart;
 
     void Awake()
     {
+        //Get Component To Pool
         objPrefab = Resources.Load("bullet") as GameObject;
     }
 
     void Start()
     {
-        //Set Intial Values
+        //Initialize Variables
         createOnStart = 5;
 
         //Create & Pool Starting Objects
@@ -25,18 +27,17 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    GameObject CreateNewObject()
+    GameObject CreateNewObject()    //Create & Pool New Object
     {
-        //Create & Pool New Object
         GameObject obj = Instantiate(objPrefab);
         obj.SetActive(false);
         objPool.Add(obj);
         return obj;
     }
 
-    public GameObject GetObject()
+    public GameObject GetObject()   //Access Object Properties
     {
-        //Collect Inactive Objects In Pool
+        //Collect Inactive Object In Pool
         GameObject obj = objPool.Find(x => x.activeInHierarchy == false);
 
         //Do We Not Have Objects?
@@ -45,7 +46,7 @@ public class ObjectPool : MonoBehaviour
             obj = CreateNewObject();
         }
 
-        //Activate New Objects
+        //Activate New Object
         obj.SetActive(true);
         return obj;
     }
