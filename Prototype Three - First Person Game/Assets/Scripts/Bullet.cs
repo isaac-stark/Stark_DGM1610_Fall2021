@@ -40,9 +40,9 @@ public class Bullet : MonoBehaviour
     {
 
         if ((Mathf.Abs(transform.position.x) >= 80)
-            ^ (Mathf.Abs(transform.position.y) >= 80)
-            ^ (Mathf.Abs(transform.position.z) >= 80)
-            ^ (Time.time - shootTime >= lifetime))
+            || (Mathf.Abs(transform.position.y) >= 80)
+            || (Mathf.Abs(transform.position.z) >= 80)
+            || (Time.time - shootTime >= lifetime))
             gameObject.SetActive(false);
     }
 
