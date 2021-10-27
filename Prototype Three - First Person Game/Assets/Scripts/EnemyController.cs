@@ -7,14 +7,14 @@ using System.Linq;
 public class EnemyController : MonoBehaviour
 {
     //Declare Variables
-    List<Vector3> path;                 //Pathfinding
-    GameObject target;                  //Target To Pathfind
-    Weapon weapon;                      //Access Blaster Functions
+    private List<Vector3> path;                 //Pathfinding
+    private GameObject target;                  //Target To Pathfind
+    private Weapon weapon;                      //Access Blaster Functions
 
-    int
+    private int
         HP,                             //Current HP
         maxHP;                          //Max HP                    
-    float
+    private float
         speed,                          //Movement Speed
         range,                          //Attack Range
         yPathOffset,                    //Unsure What This Actually Does

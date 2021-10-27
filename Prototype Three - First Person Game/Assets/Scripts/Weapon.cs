@@ -8,13 +8,13 @@ public class Weapon : MonoBehaviour
     ObjectPool bulletPool;
     Transform muzzle;
 
-    int
+    public int
         ammo,               //Current Ammo
         maxAmmo;            //Maximum Ammo
-    bool
+    private bool
         infAmmo,            //Do We Have Infinite Ammo?
         isPlayer;           //Is This A Player?
-    float
+    private float
         fireSpeed,          //Bullet Speed
         fireRate,           //Fire Frequency
         lastFireTime;       //Last Time Weapon Fired
@@ -70,11 +70,5 @@ public class Weapon : MonoBehaviour
             //Assign Speed To Bullet
             bullet.GetComponent<Rigidbody>().velocity = muzzle.forward * fireSpeed;
         }
-    }
-
-    public void Reload()    //Reload
-    {
-        ammo = maxAmmo;
-        print("Reloaded");
     }
 }

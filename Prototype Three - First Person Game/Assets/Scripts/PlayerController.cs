@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //Declare Variables
-    Camera cam;                         //Player Camera
-    Rigidbody rb;                       //Player Rigidbody
-    Weapon weapon;                      //Player Weapon Script
+    private Camera cam;                 //Player Camera
+    private Rigidbody rb;               //Player Rigidbody
+    private Weapon weapon;              //Player Weapon Script
 
-    float
+    private float
         moveSpeed,                      //Move Speed In U/s
         jumpForce,                      //Upwards Jump Force
         lookSens,                       //Mouse Camera Control Sensitivity
@@ -17,10 +17,10 @@ public class PlayerController : MonoBehaviour
         maxLook,                        //Lowest Vertical Camera Angle
         y,                              //Current Vertical Camera Angle
         T;                              //Time.deltaTime
-    int
+    private int
         HP,                             //Health
         maxHP;                          //Max Health
-    bool colliding;                     //Are We Touching Anything?
+    private bool colliding;             //Are We Touching Anything?
 
 
     void Awake()
@@ -96,6 +96,16 @@ public class PlayerController : MonoBehaviour
         if (HP <= 0) print("Pretend You're Dead Please");
     }
 
+    public void Heal(int heal)
+    {
+        HP = Mathf.Clamp(HP + heal, 0, maxHP);
+    }
+
+    public void Reload(int newAmmo)
+    {
+        weapon.ammo = Mathf.Clamp(weapon.ammo + newAmmo, 0, weapon.maxAmmo);
+    }
+
     void Update()
     {
         Move();
@@ -108,9 +118,5 @@ public class PlayerController : MonoBehaviour
         //Fire Button
         if (Input.GetKeyDown("mouse 0")) 
             weapon.Fire();
-
-        //Reload Button
-        if (Input.GetKeyDown(KeyCode.R))
-            weapon.Reload();
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     //Declare Variables
-    GameObject objPrefab;
-    List<GameObject> objPool = new List<GameObject>();
-    int createOnStart;
+    private GameObject objPrefab;
+    private List<GameObject> objPool = new List<GameObject>();
+    private int createOnStart;
 
     void Awake()
     {

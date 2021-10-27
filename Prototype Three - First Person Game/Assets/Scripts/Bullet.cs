@@ -5,8 +5,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     //Declare Variables
-    int damage;                     //How Much Damage Bullets Inflict
-    float               
+    private int damage;             //How Much Damage Bullets Inflict
+    private float               
         lifetime,                   //How Long Bullets Last In The Environment
         shootTime;                  //When Bullet Was Shot
 
